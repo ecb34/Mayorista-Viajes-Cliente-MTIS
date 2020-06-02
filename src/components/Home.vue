@@ -6,7 +6,7 @@
                   <v-card-title>Reserva de Viaje</v-card-title>
                   <v-card-text>Reserva tu vuelo, coche y hotel, 3 en 1!!!</v-card-text>
                   <v-card-actions>
-                      <v-btn block color="primary">Comenzar</v-btn>
+                      <v-btn block color="primary" to="/ReservaVuelo">Comenzar</v-btn>
                   </v-card-actions>
               </v-card>
           </v-col>
