@@ -1,28 +1,71 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <div class="d-flex align-center">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          transition="scale-transition"
+          width="40"
+        />
+
+        <h1>Mayorista Viajes</h1>
+      </div>
+
+      <v-spacer></v-spacer>
+      <div v-if="loggedIn">
+        <v-btn color="error" @click="logout">Logout</v-btn>
+      </div>
+      <login v-else></login>
+    </v-app-bar>
+
+    <v-content>
+       <router-view />
+    </v-content>
+    <v-footer>
+      <cookie-law>
+        <div slot="message">
+            Este sitio web utiliza cookies para que usted tenga la mejor experiencia de usuario. Si continúa
+            navegando está dando su consentimiento para la aceptación de las mencionadas cookies y la
+            aceptación de nuestra política de cookies
+        </div>
+    </cookie-law>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Login from './components/Login'
+import CookieLaw from 'vue-cookie-law'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  components: {
+    Login,
+    CookieLaw,
+  },
+
+  data: () => ({
+    //
+  }),
+  methods: {
+    logout(){
+      localStorage.removeItem('email')
+      localStorage.removeItem('password')
+      location.reload()
+    }
+  },
+  computed: {
+    loggedIn() {
+      return localStorage.getItem('email') != null
+    },
+  }
+};
+</script>
