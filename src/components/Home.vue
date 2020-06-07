@@ -6,7 +6,7 @@
                   <v-card-title>Reserva de Viaje</v-card-title>
                   <v-card-text>Reserva tu vuelo, coche y hotel, 3 en 1!!!</v-card-text>
                   <v-card-actions>
-                      <v-btn block color="primary" to="/ReservaVuelo">Comenzar</v-btn>
+                      <v-btn block color="primary" to="/reserva/vuelo">Comenzar</v-btn>
                   </v-card-actions>
               </v-card>
           </v-col>
@@ -15,7 +15,7 @@
                   <v-card-title>Reserva de Paquete Vacacional</v-card-title>
                   <v-card-text>Reserva uno de nuestros paquetes vacacionales</v-card-text>
                   <v-card-actions>
-                      <v-btn block color="primary">Comenzar</v-btn>
+                      <v-btn block color="primary" to="/reserva/paquete">Comenzar</v-btn>
                   </v-card-actions>
               </v-card>
           </v-col>

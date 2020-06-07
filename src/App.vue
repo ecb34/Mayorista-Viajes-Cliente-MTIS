@@ -14,8 +14,8 @@
           transition="scale-transition"
           width="40"
         />
-
-        <h1>Mayorista Viajes</h1>
+        <router-link  to="/" class="white--text"> <h1>Mayorista Viajes</h1></router-link>
+       
       </div>
 
       <v-spacer></v-spacer>

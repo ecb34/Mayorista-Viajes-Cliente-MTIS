@@ -188,9 +188,6 @@ export default {
       console.log(this.hotel_checkin + "  " + this.hotel_checkout);
       axios
         .post("http://localhost:8081/reserva", {
-          //headers: {
-          //  "Access-Control-Allow-Origin": "*"
-          //},
           login: {
             usuario: localStorage.getItem("email"),
             password: localStorage.getItem("password")
