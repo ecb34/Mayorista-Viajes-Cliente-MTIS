@@ -55,7 +55,7 @@ export default {
  }),
  methods: {
      async reservar(){
-         console.log(this.unidades)
+         this.error_message = ''
          let xml=`<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paq="http://paquete">
                     <soapenv:Header/>
                     <soapenv:Body>
