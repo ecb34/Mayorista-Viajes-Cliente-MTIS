@@ -44,6 +44,7 @@
               <v-text-field
                 v-model="avion_cantidad_personas"
                 label="Número Personas"
+                append-icon="mdi-account"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
@@ -326,7 +327,7 @@ export default {
             this.dialog = true
             setTimeout(() => {
               this.$router.push('/')
-            },5000)
+            },8000)
           }
         })
         .catch(err => {
