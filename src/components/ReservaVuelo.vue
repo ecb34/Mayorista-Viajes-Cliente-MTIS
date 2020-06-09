@@ -59,6 +59,7 @@
           </v-row>
           <v-btn color="primary" @click="e1 = 2">Continuar</v-btn>
           <v-btn text to="/">Cancelar</v-btn>
+          <b class="blue--text" v-if="avion && avion_l_destino">Coste Vuelo: {{avion.precio}} euros</b>
         </v-stepper-content>
 
         <v-stepper-content step="2">
@@ -107,10 +108,9 @@
               <span v-if="hotel_cama">Se cobrarán 20 euros extra</span>
             </v-col>
           </v-row>
-
           <v-btn color="primary" @click="e1 = 3">Continuar</v-btn>
-
           <v-btn text @click="e1=1">Anterior</v-btn>
+          <b class="blue--text" v-if="hotel">Coste Hotel: {{hotel_cama ? hotel_precio + 20 : hotel_precio}} euros</b>
         </v-stepper-content>
 
         <v-stepper-content step="3">
@@ -163,9 +163,19 @@
           </v-row>
           <v-btn color="primary" @click="enviar">Finalizar</v-btn>
           <v-btn text  @click="e1=2">Anterior</v-btn>
+          <b class="blue--text" v-if="coche">Coste Alquiler Coche: {{coche_tanque ? coche_precio + 40 : coche_precio}} euros</b>
+          <v-divider></v-divider>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
+     <v-row  justify="center" v-if="loading">
+      <v-progress-circular
+      :width="8"
+      :size="100"
+      color="primary"
+      indeterminate
+      ></v-progress-circular>
+    </v-row>
     <v-dialog v-model="dialog" max-width="450">
         <v-card>
             <v-card-title class="headline green--text">Reserva Realizada</v-card-title>
@@ -195,6 +205,7 @@ export default {
   data: () => ({
     dialog: false,
     error_message: '',
+    loading: false,
     //check avion
     items: [],
     avion: null,
@@ -214,6 +225,7 @@ export default {
     hotel_checkout: "",
     hotel_habitacion: "",
     hotel_cama: null,
+    hotel_precio: -1,
 
     //check coche
     items_coche: [],
@@ -226,6 +238,7 @@ export default {
     coche_l_recogida: "",
     coche_l_devolucion: "",
     coche_tanque: null,
+    coche_precio: -1,
 
     e1: 1
   }),
@@ -247,6 +260,7 @@ export default {
         if(this.avion == null){
           this.error_message = "No hay vuelos para las fechas seleccionadas"
         }else{
+          console.log(this.avion)
           this.error_message = ""
           this.avion_origenes = [this.avion.lugar_origen]
           this.avion_destinos = [this.avion.lugar_destino]
@@ -301,10 +315,11 @@ export default {
             tanque_lleno: this.coche_tanque,
           }
         }
-      console.log(body)
+      this.loading = true
       axios
         .post("http://localhost:8081/reserva", body)
         .then((res) => {
+          this.loading = false
           if(res.data != true){
             this.error_message = res.data
           }else{
@@ -317,6 +332,7 @@ export default {
         .catch(err => {
           console.log(err)
           this.error_message = err.message
+          this.loading = false
         });
     }
   },
@@ -326,6 +342,7 @@ export default {
         this.hoteles.forEach(res => {
           if (this.hotel == res.nombre) {
             this.hotel_habitacion = res.tipo_habitacion
+            this.hotel_precio = res.precio
           }
         });
       }
@@ -336,6 +353,7 @@ export default {
           if (this.coche == res.nombre) {
             this.coche_l_recogida = res.lugar_recogida;
             this.coche_l_devolucion = res.lugar_devolucion;
+            this.coche_precio = res.precio;
           }
         });
       }
