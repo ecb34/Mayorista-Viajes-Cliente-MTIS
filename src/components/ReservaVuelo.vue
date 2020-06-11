@@ -60,7 +60,7 @@
           </v-row>
           <v-btn color="primary" @click="e1 = 2">Continuar</v-btn>
           <v-btn text to="/">Cancelar</v-btn>
-          <b class="blue--text" v-if="avion && avion_l_destino">Coste Vuelo: {{avion.precio}} euros</b>
+          <b class="blue--text" v-if="avion && avion_l_destino">Coste Vuelo: {{avion.precio * avion_cantidad_personas}} euros</b>
         </v-stepper-content>
 
         <v-stepper-content step="2">

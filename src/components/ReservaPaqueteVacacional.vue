@@ -44,6 +44,14 @@
                     <v-spacer></v-spacer>
                     <v-btn @click="reservar()" class="blue--text" outlined block>Reservar</v-btn>
                 </v-card-actions>
+                 <v-row  justify="center" v-if="loading">
+                    <v-progress-circular
+                    :width="8"
+                    :size="100"
+                    color="primary"
+                    indeterminate
+                    ></v-progress-circular>
+                </v-row>
             <v-alert type="error" v-if="error_message!=''">{{error_message}}</v-alert>
             <v-btn text @click="stepper = 1" outlined color="grey" class="mt-4">Anterior</v-btn>
         </v-stepper-content>
@@ -84,7 +92,8 @@ export default {
      error_message: '',
      dialog: false,
      paquetes: [],
-     stepper: 1
+     stepper: 1,
+     loading: false,
  }),
  methods: {
      async reservar(){
@@ -102,8 +111,8 @@ export default {
                     </soapenv:Envelope>`
         let url = 'http://localhost:8080/ode/processes/PaqueteVacacional'
         let headers = {'Content-Type': 'text/xml'}
-           
-       try {
+        this.loading = true
+       try { 
             const  response  = await soapRequest({ url: url, headers: headers, xml: xml }); 
             const body = response.response.body
             let parser = new xml2js.Parser()
@@ -126,6 +135,7 @@ export default {
            console.log(error);
            this.error_message = 'Error en la comunicación con el servidor'
        }
+       this.loading = false
      },
      selected(paquete){
          this.stepper = 2;
